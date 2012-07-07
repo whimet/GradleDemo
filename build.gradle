@@ -1,0 +1,24 @@
+apply plugin: 'java'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+processResources {
+    from('src/main/resources') {
+        include '**/*.properties'
+        filter(ReplaceTokens, tokens: [version: '2.3.1'], beginToken: '#', endToken: '#')
+    }
+    into 'build/classes/main/resources'
+}
+
+test {
+    systemProperties 'property': 'value'
+    testLogging.showStandardStreams = true
+}
